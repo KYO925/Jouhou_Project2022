@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class TimeCounter : MonoBehaviour
 {
     public float countdownSeconds = 60;
-    private int countdownMSconds;
+    private int countdownMSeconds;
     private Text timeText;
 
     private void Start()
@@ -23,7 +23,7 @@ public class TimeCounter : MonoBehaviour
         var span = new TimeSpan(0, 0, 0, 0, (int)(countdownSeconds * 1000));
         timeText.text = string.Format("{0:f}", span.TotalSeconds);
 
-        if (countdownMSconds <= 0)
+        if (countdownMSeconds <= 0)
         {
             // 0•b‚É‚È‚Á‚½‚Æ‚«‚Ìˆ—
         }
