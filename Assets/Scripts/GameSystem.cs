@@ -7,7 +7,6 @@ public class GameSystem : MonoBehaviour
 {
     private float countdownSeconds = 3;
     public bool is_exist = false;
-    public bool is_open = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +17,7 @@ public class GameSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!is_exist && !is_open)
+        if (!is_exist && !Control.instance.is_open)
         {
             countdownSeconds -= Time.deltaTime;
             if (countdownSeconds <= 0)
