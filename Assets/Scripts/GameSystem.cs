@@ -17,7 +17,7 @@ public class GameSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!is_exist && !Control.instance.is_open)
+        if (!is_exist && !Control.instance.is_open) // 外側に誰もいない & ドアが閉まっている
         {
             countdownSeconds -= Time.deltaTime;
             if (countdownSeconds <= 0)
@@ -25,6 +25,8 @@ public class GameSystem : MonoBehaviour
                 // カウントを3秒に戻す
                 countdownSeconds = 3;
                 is_exist = true;
+
+                // 来客を出現させる処理
             }
         }
     }

@@ -25,7 +25,7 @@ public class TimeCounter : MonoBehaviour
 
         if (countdownMSeconds <= 0)
         {
-            // 0•b‚É‚È‚Á‚½‚Æ‚«‚Ìˆ—
+            // 0•b‚É‚È‚Á‚½‚Æ‚«‚Ìˆ— ƒQ[ƒ€ƒI[ƒo[‚Æ‚©
         }
     }
 }
