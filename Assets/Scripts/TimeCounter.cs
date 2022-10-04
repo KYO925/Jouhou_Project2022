@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class TimeCounter : MonoBehaviour
 {
+    // 画面上部のタイマー
+
     public float countdownSeconds = 60;
     private int countdownMSeconds;
     private Text timeText;
@@ -26,6 +28,7 @@ public class TimeCounter : MonoBehaviour
         if (countdownMSeconds <= 0)
         {
             // 0秒になったときの処理 ゲームオーバーとか
+            // リザルトシーンに移動
         }
     }
 }

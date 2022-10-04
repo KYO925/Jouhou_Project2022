@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Visitor : MonoBehaviour
 {
-    public int safety_value = 0;
+    public int defaultSafetyValue = 0;
 
 
     // Start is called before the first frame update
@@ -18,4 +18,5 @@ public class Visitor : MonoBehaviour
     {
         
     }
+
 }
