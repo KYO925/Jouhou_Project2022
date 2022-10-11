@@ -5,7 +5,7 @@ using UnityEngine;
 public class Control : MonoBehaviour
 {
     public static Control instance = null;
-    public bool is_open = false;
+    public bool is_open = true;
     
     // Start is called before the first frame update
     void Start()
@@ -21,6 +21,10 @@ public class Control : MonoBehaviour
         {
             is_open = !is_open;
             Debug.Log(is_open);
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            GameSystem.instance.Attack();
         }
     }
 
