@@ -2,18 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameSystem : MonoBehaviour
 {
     private float countdownSeconds = 3;
     public bool is_exist = false;
-    public GameObject StartMessage;
+    public GameObject alertMessage;
+    public GameObject startMessage;
+    public bool is_gameStart = false;
+    public GameObject scoreText;
     public static GameSystem instance;
-    Stack<GameObject> visitors = new Stack<GameObject>();
-    public GameObject visitor;
 
     // Prefab
     public GameObject testVisitor;
+    Stack<GameObject> visitors = new Stack<GameObject>();
+    public GameObject visitor;
 
     public void Awake()
     {
@@ -26,9 +30,11 @@ public class GameSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 来客をスタックに入れる
         int v = 10;
         for (int i = 0; i < v; i++)
         {
+            // TODO: 敵味方がランダムに入るようにする
             visitors.Push(testVisitor);
         }
     }
@@ -36,15 +42,24 @@ public class GameSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!startMessage.activeSelf)
+        {
+            TimeCounter.instance.timerStop = false;
+        }
+
         if (!is_exist) // 外側に誰もいない
         {
             if (Control.instance.is_open) //ドアが開いている
             {
-                //ドアを閉じるように促す
+                if (!startMessage.activeSelf)
+                {
+                    alertMessage.SetActive(true);
+                }
             }
             else if (!Control.instance.is_open) //ドアが閉まっている
             {
-                StartMessage.SetActive(false);
+                startMessage.SetActive(false);
+                alertMessage.SetActive(false);
                 countdownSeconds -= Time.deltaTime;
                 if (countdownSeconds <= 0)
                 {
@@ -62,17 +77,20 @@ public class GameSystem : MonoBehaviour
     // 来客出現させる
     void Encount()
     {
-        // TODO: 敵か味方のいずれかがランダムに生成されるようにする
         Vector2 pos = new Vector2(0.0f, -1.0f);
-        visitor = Instantiate(visitors.Pop(), pos, Quaternion.identity) as GameObject;
+        visitor = Instantiate(visitors.Pop(), pos, Quaternion.identity);
     }
 
+    // 来客への攻撃
     public void Attack()
     {
         if (is_exist && Control.instance.is_open)
         {
+            GameManager.instance.score = visitor.GetComponent<Visitor>().score;
+            scoreText.GetComponent<Text>().text = GameManager.instance.score.ToString();
             Destroy(visitor);
             is_exist = false;
+            TimeCounter.instance.AddSeconds(10.0f);
         }
     }
 }

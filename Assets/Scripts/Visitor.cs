@@ -5,6 +5,7 @@ using UnityEngine;
 public class Visitor : MonoBehaviour
 {
     public int defaultSafetyValue = 0;
+    public int score = 100;
 
 
     // Start is called before the first frame update

@@ -5,14 +5,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TimeCounter : MonoBehaviour
 {
     // 画面上部のタイマー
 
+    public static TimeCounter instance = null;
     public float countdownSeconds = 60;
-    private int countdownMSeconds;
     private Text timeText;
+    public bool timerStop = true;
 
     private void Start()
     {
@@ -21,14 +23,40 @@ public class TimeCounter : MonoBehaviour
 
     void Update()
     {
-        countdownSeconds -= Time.deltaTime;
-        var span = new TimeSpan(0, 0, 0, 0, (int)(countdownSeconds * 1000));
-        timeText.text = string.Format("{0:f}", span.TotalSeconds);
+        if (!timerStop)
+        {
+            countdownSeconds -= Time.deltaTime;
+            var span = new TimeSpan(0, 0, 0, 0, (int)(countdownSeconds * 1000));
+            timeText.text = string.Format("{0:f}", span.TotalSeconds);
+        }
 
-        if (countdownMSeconds <= 0)
+        if (countdownSeconds <= 0)
         {
             // 0秒になったときの処理 ゲームオーバーとか
-            // リザルトシーンに移動
+            SceneManager.LoadScene("ResultScene");
+        }
+    }
+
+    public void Switch()
+    {
+        timerStop = !timerStop;
+    }
+
+    public void AddSeconds(float s)
+    {
+        countdownSeconds += s;
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
         }
     }
 }

@@ -499,7 +499,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0000
+  m_Text: 0
 --- !u!222 &504134544
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -976,7 +976,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 000.00
+  m_Text: 0.00
 --- !u!222 &1554384420
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -997,7 +997,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b2fe54eb0ba074db910db4d46632f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownSeconds: 999
+  countdownSeconds: 60
+  timerStop: 1
 --- !u!1 &1643200398
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,8 +1029,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   is_exist: 0
-  StartMessage: {fileID: 331821407}
+  startMessage: {fileID: 331821407}
+  is_gameStart: 0
+  scoreText: {fileID: 504134541}
   testVisitor: {fileID: 5423185492945896282, guid: b63ea9ff11314bf4c9f5abb28143f7b2, type: 3}
+  visitor: {fileID: 0}
 --- !u!4 &1643200400
 Transform:
   m_ObjectHideFlags: 0
