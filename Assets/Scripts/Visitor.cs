@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Visitor : MonoBehaviour
 {
-    public int defaultSafetyValue = 0;
+    public int safetyValue = 0;
     public int score = 100;
 
 

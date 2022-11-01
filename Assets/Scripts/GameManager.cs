@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int s)
     {
+        // “|‚µ‚½‘ŠŽè‚É‚æ‚Á‚ÄƒXƒRƒA‚ª•Ï‚í‚é‚æ‚¤‚É‚·‚é
         score += s;
     }
 
