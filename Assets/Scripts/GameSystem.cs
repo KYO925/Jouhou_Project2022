@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameSystem : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameSystem : MonoBehaviour
     public bool is_exist = false;
     public GameObject alertMessage;
     public GameObject startMessage;
+    public GameObject gameOverMessage;
     public bool is_gameStart = false;
     public GameObject scoreText;
     public static GameSystem instance;
@@ -31,19 +33,19 @@ public class GameSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.instance.score = 0;
         // 来客をスタックに入れる
-        int v = 10;
-        for (int i = 0; i < v; i++)
-        {
-            // TODO: 敵味方がランダムに入るようにする
-            int index = Random.Range(0, visitorList.Length);
-            visitors.Push(visitorList[index]);
-        }
+        AddVisitors();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (player_hp <= 0) // プレイヤーのライフが0を下回ったとき
+        {
+            StartCoroutine(JumpResult());
+        }
+
         if (!startMessage.activeSelf)
         {
             TimeCounter.instance.timerStop = false;
@@ -90,14 +92,14 @@ public class GameSystem : MonoBehaviour
                     {
                         // プレイヤーのライフが1減ってvisitorが居なくなる
                         PlayerDamage(1);
-                        Destroy(visitor);
+                        KillVisitor();
                         is_exist = false;
                     }
                     else // 味方の場合
                     {
                         // スコアが増えてvisitorが居なくなる
                         UpdateScore(visitor.GetComponent<Visitor>().score);
-                        Destroy(visitor);
+                        KillVisitor();
                         is_exist = false;
                     }
                 }
@@ -120,14 +122,14 @@ public class GameSystem : MonoBehaviour
         if (openAndExist && safetyValue < 0)
         {
             UpdateScore(visitor.GetComponent<Visitor>().score);
-            Destroy(visitor);
+            KillVisitor();
             is_exist = false;
             TimeCounter.instance.AddSeconds(10.0f);
         }
         else if (openAndExist)
         {
             PlayerDamage(1);
-            Destroy(visitor);
+            KillVisitor();
             is_exist = false;
             TimeCounter.instance.AddSeconds(-10.0f);
         }
@@ -145,7 +147,7 @@ public class GameSystem : MonoBehaviour
         scoreText.GetComponent<Text>().text = GameManager.instance.score.ToString();
     }
 
-    void UpdatePlayerHP()
+    void UpdatePlayerHP() // プレイヤーのライフの表示を更新する
     {
         for (int i = 0; i < playerHearts.Length; i++)
         {
@@ -157,6 +159,37 @@ public class GameSystem : MonoBehaviour
             {
                 playerHearts[i].SetActive(false);
             }
+        }
+    }
+
+    public IEnumerator JumpResult()
+    {
+        // TODO:ゲーム終了の音を入れる
+        startMessage.SetActive(false);
+        alertMessage.SetActive(false);
+        gameOverMessage.SetActive(true);
+        yield return new WaitForSeconds(3);
+        GameManager.instance.UpdateBestScore();
+        SceneManager.LoadScene("ResultScene");
+    }
+
+    private void AddVisitors() // Visitorの補充
+    {
+        int v = 10;
+        for (int i = 0; i < v; i++)
+        {
+            // TODO: 敵味方がランダムに入るようにする
+            int index = Random.Range(0, visitorList.Length);
+            visitors.Push(visitorList[index]);
+        }
+    }
+
+    private void KillVisitor()
+    {
+        Destroy(visitor);
+        if (visitors.Count <= 1)
+        {
+            AddVisitors();
         }
     }
 }

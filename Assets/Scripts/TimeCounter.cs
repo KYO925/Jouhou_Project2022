@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class TimeCounter : MonoBehaviour
 {
@@ -33,7 +32,8 @@ public class TimeCounter : MonoBehaviour
         if (countdownSeconds <= 0)
         {
             // 0秒になったときの処理 ゲームオーバーとか
-            SceneManager.LoadScene("ResultScene");
+            countdownSeconds = 0;
+            StartCoroutine(GameSystem.instance.JumpResult());
         }
     }
 
