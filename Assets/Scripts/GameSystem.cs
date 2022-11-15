@@ -165,8 +165,6 @@ public class GameSystem : MonoBehaviour
     public IEnumerator JumpResult()
     {
         // TODO:ゲーム終了の音を入れる
-        startMessage.SetActive(false);
-        alertMessage.SetActive(false);
         gameOverMessage.SetActive(true);
         yield return new WaitForSeconds(3);
         GameManager.instance.UpdateBestScore();
@@ -178,7 +176,7 @@ public class GameSystem : MonoBehaviour
         int v = 10;
         for (int i = 0; i < v; i++)
         {
-            // TODO: 敵味方がランダムに入るようにする
+            // 敵味方がランダムに入る
             int index = Random.Range(0, visitorList.Length);
             visitors.Push(visitorList[index]);
         }
