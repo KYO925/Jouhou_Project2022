@@ -33,6 +33,8 @@ public class GameSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // bgm開始
+        SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Dungeon);
         GameManager.instance.score = 0;
         // 来客をスタックに入れる
         AddVisitors();
@@ -91,6 +93,7 @@ public class GameSystem : MonoBehaviour
                     if (safetyValue < 0) // 敵の場合
                     {
                         // プレイヤーのライフが1減ってvisitorが居なくなる
+
                         PlayerDamage(1);
                         KillVisitor();
                         is_exist = false;
@@ -110,6 +113,8 @@ public class GameSystem : MonoBehaviour
     // 来客出現させる
     void Encount()
     {
+        // インターホン音
+        SoundManager.Instance.PlaySE(SESoundData.SE.Intercome);
         Vector2 pos = new Vector2(0.0f, -1.0f);
         visitor = Instantiate(visitors.Pop(), pos, Quaternion.identity);
     }
@@ -121,6 +126,8 @@ public class GameSystem : MonoBehaviour
         bool openAndExist = is_exist && Control.instance.is_open;
         if (openAndExist && safetyValue < 0)
         {
+            // 攻撃音
+            SoundManager.Instance.PlaySE(SESoundData.SE.Attack);
             UpdateScore(visitor.GetComponent<Visitor>().score);
             KillVisitor();
             is_exist = false;
@@ -137,6 +144,8 @@ public class GameSystem : MonoBehaviour
 
     void PlayerDamage(int dmg)
     {
+        // ダメージ音
+        SoundManager.Instance.PlaySE(SESoundData.SE.Damage);
         player_hp -= dmg;
         UpdatePlayerHP();
     }
@@ -164,6 +173,8 @@ public class GameSystem : MonoBehaviour
 
     public IEnumerator JumpResult()
     {
+        // bgm終了
+        SoundManager.Instance.StopBGM(BGMSoundData.BGM.Dungeon);
         // TODO:ゲーム終了の音を入れる
         gameOverMessage.SetActive(true);
         yield return new WaitForSeconds(3);
