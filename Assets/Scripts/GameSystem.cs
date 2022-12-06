@@ -20,7 +20,7 @@ public class GameSystem : MonoBehaviour
     // Prefab
     public GameObject[] visitorList;
     Stack<GameObject> visitors = new Stack<GameObject>();
-    public GameObject visitor;
+    private GameObject visitor;
 
     public void Awake()
     {
